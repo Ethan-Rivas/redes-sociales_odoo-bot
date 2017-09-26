@@ -1,3 +1,2 @@
-import sms
+import bot
 import wizard
-import controllers

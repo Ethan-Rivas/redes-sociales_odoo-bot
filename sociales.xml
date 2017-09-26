@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--Bot Messenger-->
+        <record id="action_messenger_bot" model="ir.actions.act_window">
+            <field name="name">Bot Messenger</field>
+            <field name="res_model">bot.messenger</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="bot_messenger_tree" model="ir.ui.view">
+            <field name="name">sms.tree.view</field>
+            <field name="model">bot.messenger</field>
+            <field name="arch" type="xml">
+                <tree string="Bot Messenger">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_bot_message">
+            <field name="name">Envío de Mensajes</field>
+            <field name="res_model">bot.quick_send_wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_bot_messenger_list_form">
+            <field name="name">Bot Messenger List Form</field>
+            <field name="model">bot.messenger</field>
+            <field name="arch" type="xml">
+                <form string="Contact List">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button string="Mandar Mensaje" name="%(redes_sociales.action_bot_message)d"
+                                    type="action" icon="fa-user" class="oe_stat_button">
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_view_mass_mailing_lists">
+            <field name="name">Mailing Lists</field>
+            <field name="res_model">bot.messenger</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a new mailing list.
+                </p><p>
+                    Mailing lists allows you to to manage customers and
+                    contacts easily and to send to mailings in a single click.
+                </p></field>
+        </record>
+
+        <!--Bot Messenger Contact-->
+        <record id="action_contact_bot" model="ir.actions.act_window">
+            <field name="name">Bot Messenger Contact</field>
+            <field name="res_model">bot.messenger.contact</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="bot_contact_tree" model="ir.ui.view">
+            <field name="name">bot_contact_tree</field>
+            <field name="model">bot.messenger.contact</field>
+            <field name="arch" type="xml">
+                <tree string="Bot Messenger Contact">
+                    <field name="name"/>
+                    <field name="identifier"/>
+                    <field name="bot_id"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

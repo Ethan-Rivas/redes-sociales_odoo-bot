@@ -1,44 +1,37 @@
 # -*- coding: utf-8 -*-
 from odoo import api,fields,models
-import base64
+import requests
+import json
 
-class quick_send_wizard(models.TransientModel):
-    _name = "sms.quick_send_wizard"
+class bot_quick_send_wizard(models.TransientModel):
+    _name = "bot.quick_send_wizard"
     _description = "Envio rapido"
 
     name = fields.Char(u"Identificador de envío")
     text = fields.Text("Texto")
-    dests = fields.Text("Destinatarios", help="Separar por saltos de línea")
-    dbfile = fields.Binary("Archivo destinatarios", help="Puede subir un archivo con los destinatarios")
-    schedule_date = fields.Datetime("Fecha programada", help="Cuándo se deben empezar a enviar estos mensajes. Dejar en blanco para enviar en este momento")
+    bot_id = fields.Many2one(
+        'bot.messenger', string='Bot Messenger',
+        ondelete='cascade', required=False, default=lambda self: self.env['bot.messenger'].search([], limit=1, order='id desc'))
 
     @api.multi
-    def action_process(self):
-        Sms = self.env["sms.sms"]
+    def send_messages(self):
+        # Sms = self.env["sms.sms"]
         dests = []
-        if self.dests:
-            for number in self.dests.split("\n"):
-                number = number.strip()
-                dests.append(number)
-        if self.dbfile:
-            content = base64.b64decode(self.dbfile)
-            for number in content.split("\n"):
-                number = number.strip()
-                dests.append(number)
-        created = []
-        for number in dests:    
-            if number:
-                created.append(Sms.create({
-                    'text': self.text,
-                    'dest': number,
-                    'schedule_date': self.schedule_date,
-                    'name': self.name
-                }))
+        if self.bot_id:
+            for x in self.env["bot.messenger.contact"].search([('bot_id','=',self.bot_id.id)]):
+                dests.append(x.identifier)
+         
+        if len(dests) >= 1:
+            # POST -> https://edb14610.ngrok.io/messenger/send_messages <- Cambiar dominio
+            # {"messenger": {"ids": dests, "text": self.text} }
+
+            response = requests.request("POST", 'https://edb14610.ngrok.io/messenger/send_messages', data=json.dumps({"messenger": {"ids": dests, "text": self.text} }), headers = {'Content-Type': 'application/json'})
+            print(response.text)
+        
         return {
-            'name': 'SMS',
-            'res_model': 'sms.sms',
+            'name': 'Bot Messenger',
+            'res_model': 'bot.messenger',
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'list,form',
-            'domain': [('id', 'in', [x.id for x in created])]
         }

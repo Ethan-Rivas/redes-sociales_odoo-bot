@@ -2,31 +2,20 @@
 <odoo>
     <data>
 
-        <record model="ir.ui.view" id="view_form_quick_send_wizard">
-            <field name="name">view.form.quick.send.wizard</field>
-            <field name="model">sms.quick_send_wizard</field>
+        <record model="ir.ui.view" id="form_bot_quick_send_wizard">
+            <field name="name">Form Bot Quick Send</field>
+            <field name="model">bot.quick_send_wizard</field>
             <field name="arch" type="xml">
                 <form string="Envío rápido">
                     <sheet>
-                        <h1><field name="name" placeholder="Nombre envío"/></h1>
                         <group>
-                            <field name="dests"/>
-                            <field name="dbfile"/>
                             <field name="text" placeholder="Escribe tu mensaje aquí"/>
-                            <field name="schedule_date"/>
+                            <field name="bot_id" placeholder="Bot Messenger"/>
                         </group>
-                        <button name="action_process" string="Enviar" type="object"/>
+                        <button name="send_messages" string="Enviar Mensajes" type="object"/>
                     </sheet>
                 </form>
             </field>
-        </record>
-
-        <record model="ir.actions.act_window" id="action_sms_quick_send">
-            <field name="name">Envío rápido</field>
-            <field name="res_model">sms.quick_send_wizard</field>
-            <field name="view_mode">form</field>
-            <field name="view_type">form</field>
-            <field name="target">inline</field>
         </record>
 
     </data>
