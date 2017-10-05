@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- WhatsApp -->
+        <record id="action_whatsapp" model="ir.actions.act_window">
+            <field name="name">WhatsApp Link</field>
+            <field name="res_model">whatsapp.link</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="whatsapp_link_tree" model="ir.ui.view">
+            <field name="name">WhatsApp Link</field>
+            <field name="model">whatsapp.link</field>
+            <field name="arch" type="xml">
+                <tree string="WhatsApp URLs">
+                    <field name="name"/>
+                    <field name="country"/>
+                    <field name="url"/>
+                    <field name="short_url"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

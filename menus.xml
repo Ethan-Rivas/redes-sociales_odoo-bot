@@ -2,7 +2,11 @@
     <data>
         <menuitem id="redes_sociales" name="Redes Sociales" sequence="100" parent="" web_icon="sms,static/description/icon.png"/>
 
+        <!-- Messenger -->
         <menuitem id="bot_messenger"          name="Bot Messenger"     action="action_messenger_bot"  sequence="110"  parent="redes_sociales"/>
         <menuitem id="bot_messenger_contact"  name="Contacto del Bot"  action="action_contact_bot"    sequence="120"  parent="redes_sociales"/>
+        
+        <!-- WhatsApp -->
+        <menuitem id="whatsapp_link"  name="WhatsApp Link"  action="action_whatsapp"    sequence="130"  parent="redes_sociales"/>
     </data>
 </odoo>
