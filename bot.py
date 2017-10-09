@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 from odoo import api,fields,models
 
-class bot_messenger(models.TransientModel):
+class bot_messenger(models.Model):
     _name = "bot.messenger"
     _description = "Bot Messenger"
 
     name = fields.Char(string="Nombre del Bot")
+    page_id = fields.Char(string="Page ID")
+    page_token = fields.Char(string="Page Access Token")
 
-class bot_messenger_contact(models.TransientModel):
+class bot_messenger_contact(models.Model):
     _name = "bot.messenger.contact"
     _description = "Bot Messenger Contact"
 
