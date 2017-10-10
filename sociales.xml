@@ -16,6 +16,8 @@
             <field name="arch" type="xml">
                 <tree string="Bot Messenger">
                     <field name="name"/>
+                    <field name="page_id"/>
+                    <field name="page_token"/>
                 </tree>
             </field>
         </record>
@@ -44,6 +46,8 @@
                             <h1>
                                 <field name="name"/>
                             </h1>
+                            <field name="page_id"/>
+                            <field name="page_token"/>
                         </div>
                     </sheet>
                 </form>
