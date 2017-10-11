@@ -24,14 +24,14 @@ class whatsapp_link(models.TransientModel):
 
     @api.depends('url')
     def _generate_short_url(self):
-        url = "https://www.googleapis.com/urlshortener/v1/url"
-        querystring = {"key":"AIzaSyBLCwJHqBKPH1isjD0E9vrhgzG_G1eDL3k"}
+        url = self.env["ir.config.parameter"].get_param("google.shortener")
+        querystring = {"key": self.env["ir.config.parameter"].get_param("google.token")}
 
         for rec in self:
             payload = {"longUrl": rec.url}
             response = requests.request("POST", url, data=json.dumps(payload), headers = {'Content-Type': 'application/json'}, params=querystring)
             rec.short_url = ast.literal_eval(response.text)['id']
-        
+
 class res_contry(models.Model):
     _inherit = "res.country"
     _description = "Extend res.country"

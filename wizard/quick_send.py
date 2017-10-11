@@ -20,14 +20,15 @@ class bot_quick_send_wizard(models.TransientModel):
         if self.bot_id:
             for x in self.env["bot.messenger.contact"].search([('bot_id','=',self.bot_id.id)]):
                 dests.append(x.identifier)
-         
+
         if len(dests) >= 1:
             # POST -> https://edb14610.ngrok.io/messenger/send_messages <- Cambiar dominio
             # {"messenger": {"ids": dests, "text": self.text} }
 
-            response = requests.request("POST", 'https://edb14610.ngrok.io/messenger/send_messages', data=json.dumps({"messenger": {"ids": dests, "text": self.text} }), headers = {'Content-Type': 'application/json'})
+            url = self.env["ir.config.parameter"].get_param("send.messages")
+            response = requests.request("POST", url, data=json.dumps({"messenger": {"ids": dests, "text": self.text} }), headers = {'Content-Type': 'application/json'})
             print(response.text)
-        
+
         return {
             'name': 'Bot Messenger',
             'res_model': 'bot.messenger',
